@@ -6,8 +6,8 @@ const quizRoutes = require('../routes/quizRoute'); // Import quiz routes
 
 dotenv.config();
 const app = express();
-
-app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cors({origin:"*"}));
 
 // Middleware
 app.use(express.json());  // Parse incoming JSON requests
