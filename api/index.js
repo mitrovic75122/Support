@@ -6,11 +6,11 @@ const quizRoutes = require('../routes/quizRoute'); // Import quiz routes
 
 dotenv.config();
 const app = express();
-app.use(express.static(path.join(__dirname, "build")));
 app.use(cors({origin:"*"}));
 
 // Middleware
 app.use(express.json());  // Parse incoming JSON requests
+app.use(express.static(path.join(__dirname, "build")));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
