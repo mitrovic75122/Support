@@ -14,6 +14,11 @@ const quizSchema = new mongoose.Schema(
         type: Number,
         required: false,
         default: 0
+    },
+    checked: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   {

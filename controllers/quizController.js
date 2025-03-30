@@ -5,7 +5,7 @@ const createQuiz = async (req, res) => {
   try {
     console.log(req.body);
     // Check if question and answer exist in the request body
-    const { question, answer } = req.body;
+    const { question, answer, checked } = req.body;
 
     if (!question || !answer) {
       return res.status(400).json({ message: 'Question and answer are required' });
@@ -14,6 +14,7 @@ const createQuiz = async (req, res) => {
     const newQuiz = new Quiz({
       question,
       answer,
+      checked
     });
 
     await newQuiz.save();
@@ -28,7 +29,7 @@ const createQuiz = async (req, res) => {
 const getAllQuizzes = async (req, res) => {
   try {
     console.log("Here")
-    const quizzes = await Quiz.find(); // Fetch all quizzes from the database
+    const quizzes = await Quiz.find().sort({checked: -1}); // Fetch all quizzes from the database
     res.status(200).json(quizzes); // Return the quizzes
   } catch (error) {
     console.error('Error fetching quizzes:', error);
@@ -57,12 +58,12 @@ const getQuizById = async (req, res) => {
 // Update a quiz by ID
 const updateQuiz = async (req, res) => {
   const quizId = req.params.id;
-  const { question, answer } = req.body;
+  const { question, answer, checked } = req.body;
 
   try {
     const updatedQuiz = await Quiz.findByIdAndUpdate(
       quizId,
-      { question, answer },
+      { question, answer, checked },
       { new: true } // Return the updated quiz
     );
 
